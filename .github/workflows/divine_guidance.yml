@@ -1,0 +1,28 @@
+name: Daily Discernment  
+on:  
+  schedule:  
+    - cron: "0 0 * * *"  # Daily midnight (Matthew 6:6)  
+
+jobs:  
+  seek:  
+    runs-on: ubuntu-latest  
+    steps:  
+      - name: Cast Lots (Proverbs 16:33)  
+        run: |  
+          SEED=$(date +%s | sha256sum | base64 | head -c 32)  
+          PRICE=$(( (${#SEED} * 7) % 100000 ))  # 7 = divine perfection  
+          echo "PRICE=$PRICE" >> $GITHUB_ENV  
+          
+      - name: Pray for Confirmation (1 John 5:14-15)  
+        run: |  
+          if [ $(( $(date +%d) % 3 )) -eq 0 ]; then  # Trinity confirmation  
+            echo "BUY=1" >> $GITHUB_ENV  
+          else  
+            echo "BUY=0" >> $GITHUB_ENV  
+          fi  
+
+      - name: Log Revelation (Habakkuk 2:2-3)  
+        run: |  
+          echo "Date: $(date)" >> revelations.md  
+          echo "Price: ${{ env.PRICE }}" >> revelations.md  
+          echo "Guidance: ${{ env.BUY }}" >> revelations.md  
